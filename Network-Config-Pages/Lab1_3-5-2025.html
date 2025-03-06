@@ -1,0 +1,236 @@
+<html>
+    <head>
+        <title>Lab 1</title>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+
+    <body>
+        <center>
+            <h2>
+                Lab 1
+            </h2>
+            <h3>
+                Date: 3/5/2025
+            </h3>
+            <p>
+                <u>Tools used:</u>
+                <br>
+                Aruba Central, PuTTY SSH Client
+                <br>
+                <br>
+                <u>Gear used:</u>
+                <br>
+                Aruba 9004 Gateway, AOS-CX 6100 Switch
+                <br>
+                <br>
+                <u>Goal:</u>
+                <br>
+                Document which VLANs belong to which port on the AOS-CX 6100 
+                switch and the Aruba 9004 gateway. Write down what 
+                infrastructure devices are on what ports via LLDP. The use of 
+                trace or looking at the physical wire connections is not permitted.
+            </p>
+        </center>
+        
+        <hr>
+
+        <h2 style="margin-bottom: 0.5em;">
+            <u>Part 1: Determine VLAN to Port Mappings</u>
+        </h2>
+        <h3 style="margin-top: 0.5em; margin-bottom: 0.5em;">
+            AOS-CX 6100 Switch
+        </h3>
+        <p style="margin: 0;">
+            Determining the VLAN to Port mappings on the AOS-CX 6100 switch was 
+            fairly simple. Just run the following command:
+        </p>
+        <p style="font-family: 'Courier New', Courier, monospace; font-size: 75%;
+                  margin-left: 2.5em; border-left: 1.35px solid darkslategrey; 
+                  padding: 0.25em;">
+            6100# 
+            <font color="red">
+                <b>show vlan</b>
+            </font>
+        </p>
+        <center>
+            <table style="width: 30%">
+                <tr>
+                    <th colspan="2">VLAN to Port Mapping</th>
+                </tr>
+                <tr>
+                    <th>VLAN</th>
+                    <th>Port</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>1/1/15-1/1/16</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>1/1/12-1/1/14</td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td>1/1/2-1/1/4, 1/1/7-1/1/8, 1/1/12</td>
+                </tr>
+                <tr>
+                    <td>30</td>
+                    <td>1/1/1-1/1/2, 1/1/4-1/1/6, 1/1/8, 1/1/10-1/1/12</td>
+                </tr>
+                <tr>
+                    <td>111</td>
+                    <td>1/1/4, 1/1/7-1/1/9</td>
+                </tr>
+            </table>
+        </center>
+        <h3 style="margin-top: 0.5em; margin-bottom: 0.5em;">
+            Aruba 9004 Gateway
+        </h3>
+        <p style="margin: 0;">
+            Likewise, for the Aruba 9004 Gateway I ran the same command:
+        </p>
+        <p style="font-family: 'Courier New', Courier, monospace; font-size: 75%;
+                  margin-left: 2.5em; border-left: 1.35px solid darkslategrey; 
+                  padding: 0.25em;">
+            (Aruba9004)#
+            <font color="red">
+                <b>show vlan</b>
+            </font>
+        </p>
+        <center>
+            <table style="width: 30%">
+                <tr>
+                    <th colspan="2">VLAN to Port Mapping</th>
+                </tr>
+                <tr>
+                    <th>VLAN</th>
+                    <th>Port</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>GE0/0/2 Pc0-7</td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td>GE0/0/3</td>
+                </tr>
+                <tr>
+                    <td>30</td>
+                    <td>GE0/0/0</td>
+                </tr>
+                <tr>
+                    <td>111</td>
+                    <td>GE0/0/1 GE0/0/3</td>
+                </tr>
+            </table>
+        </center>
+
+        <h2 style="margin-bottom: 0.5em;">
+            <u>Part 2: Determine Device to Port Mappings via LLDP</u>
+        </h2>
+        <h3 style="margin-top: 0.5em; margin-bottom: 0.5em;">
+            AOS-CX 6100 Switch
+        </h3>
+        <p style="margin: 0;">
+            Determining the Device to Port mappings via LLDP on the AOS-CX 6100 switch was 
+            fairly simple. Just run the following command:
+        </p>
+        <p style="font-family: 'Courier New', Courier, monospace; font-size: 75%;
+                  margin-left: 2.5em; border-left: 1.35px solid darkslategrey; 
+                  padding: 0.25em;">
+            6100# 
+            <font color="red">
+                <b>show lldp neighbor-info</b>
+            </font>
+        </p>
+        <center>
+            <table style="width: 30%;">
+                <tr>
+                    <th colspan="3">Device to Port Mapping</th>
+                </tr>
+                <tr>
+                    <th>Port</th>
+                    <th>Device</th>
+                    <th>Port Description</th>
+                </tr>
+                <tr>
+                    <td>1/1/1</td>
+                    <td>Aruba9004 (Aruba 9004 Gateway)</td>
+                    <td>GE0/0/0</td>
+                </tr>
+                <tr>
+                    <td>1/1/2</td>
+                    <td> Bayonet ZAG3KH40H1 (AT&T Modem)</td>
+                    <td>eth0</td>
+                </tr>
+                <tr>
+                    <td>1/1/6</td>
+                    <td>eero (Controller?)</td>
+                    <td>eth1</td>
+                </tr>
+                <tr>
+                    <td>1/1/7</td>
+                    <td>Aruba9004 (Aruba 9004 Gateway)</td>
+                    <td>LAN</td>
+                </tr>
+                <tr>
+                    <td>1/1/8</td>
+                    <td>Aruba AP-325</td>
+                    <td>eth0</td>
+                </tr>
+            </table>
+        </center>
+        <h3 style="margin-top: 0.5em; margin-bottom: 0.5em;">
+            Aruba 9004 Gateway
+        </h3>
+        <p style="margin: 0;">
+            Likewise, for the Aruba 9004 Gateway I ran the following command:
+        </p>
+        <p style="font-family: 'Courier New', Courier, monospace; font-size: 75%;
+                  margin-left: 2.5em; border-left: 1.35px solid darkslategrey; 
+                  padding: 0.25em;">
+            (Aruba9004)#
+            <font color="red">
+                <b>show lldp neighbor</b>
+            </font>
+        </p>
+        <center>
+            <table style="width: 30%; margin-bottom: 2em;">
+                <tr>
+                    <th colspan="3">Device to Port Mapping</th>
+                </tr>
+                <tr>
+                    <th>Port</th>
+                    <th>Device</th>
+                    <th>Remote Interface</th>
+                </tr>
+                <tr>
+                    <td>GE0/0/0</td>
+                    <td>6100 (AOS-CX 6100 Switch)</td>
+                    <td>1/1/1</td>
+                </tr>
+                <tr>
+                    <td>GE0/0/3</td>
+                    <td>6100 (AOS-CX 6100 Switch)</td>
+                    <td>1/1/7</td>
+                </tr>
+            </table>
+        </center>
+
+        <hr>
+
+        <p>
+            <u>Side Takeaway Notes:</u>
+            <ul>
+                <li>
+                    You cannot SSH into a device over the Internet 
+                    with its private address.
+                </li>
+            </ul>
+        </p>
+    </body>
+</html>
